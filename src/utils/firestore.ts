@@ -1,11 +1,11 @@
 import {
-  DocumentData,
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
-  SnapshotOptions,
+  type DocumentData,
+  type FirestoreDataConverter,
+  type QueryDocumentSnapshot,
+  type SnapshotOptions,
   Timestamp,
 } from 'firebase/firestore';
-import { User, Project, WeeklyPlan } from '@/types';
+import type { User, Project, WeeklyPlan } from '@/types';
 
 /**
  * Firestore converter for User documents

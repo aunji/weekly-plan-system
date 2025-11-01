@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
-import { Department, Language } from '@/types';
+import type { Department, Language } from '@/types';
 
 const departments: Department[] = ['IT', 'Game', 'Design', 'QA', 'Marketing', 'Management', 'Other'];
 const languages: Language[] = ['en', 'th'];
