@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
+import { WeekSelector } from '@/components/dashboard/WeekSelector';
+import { FilterBar } from '@/components/dashboard/FilterBar';
+import { PlanCard } from '@/components/dashboard/PlanCard';
+import { useTeamPlans } from '@/hooks/useTeamPlans';
+import { getCurrentWeekIdentifier } from '@/utils/date';
 
 export const DashboardPage: React.FC = () => {
   const { t } = useTranslation();
   const { userData, logout } = useAuth();
+  const [currentWeek, setCurrentWeek] = useState(getCurrentWeekIdentifier());
+
+  const { filteredPlans, loading, filters, setFilters } = useTeamPlans(currentWeek);
 
   const handleLogout = async () => {
     try {
@@ -53,33 +61,64 @@ export const DashboardPage: React.FC = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="card">
-          <h2 className="text-xl font-semibold mb-4">{t('dashboard.teamDashboard')}</h2>
-          <p className="text-gray-600 mb-4">
-            Welcome to the Weekly Plan System! This dashboard will show all team plans.
-          </p>
+        {/* Week Selector */}
+        <WeekSelector currentWeek={currentWeek} onWeekChange={setCurrentWeek} />
 
-          <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
-            <h3 className="font-medium text-green-900">Week 2 Complete!</h3>
-            <ul className="mt-2 space-y-1 text-sm text-green-800">
-              <li>✓ Plan Editor with daily/summary modes</li>
-              <li>✓ Monday-Friday task inputs</li>
-              <li>✓ Blocker tracking with severity levels</li>
-              <li>✓ Weekly summary mode</li>
-              <li>✓ Firestore integration with real-time updates</li>
-              <li>✓ Update logging</li>
-              <li>✓ Keyboard shortcuts (Ctrl+S to save)</li>
-            </ul>
-            <p className="mt-4 text-sm text-green-700">
-              <Link to="/my-plan" className="font-medium underline">
-                Create your weekly plan →
-              </Link>
-            </p>
-            <p className="mt-2 text-sm text-green-700">
-              Next up: Week 3 - Real-time team dashboard with blocker indicators
-            </p>
+        {/* Filter Bar */}
+        <FilterBar filters={filters} onFiltersChange={setFilters} />
+
+        {/* Plans Grid */}
+        {loading ? (
+          <div className="card text-center py-12">
+            <svg
+              className="animate-spin h-8 w-8 mx-auto mb-4 text-primary-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            <p className="text-gray-600">{t('common.loading')}</p>
           </div>
-        </div>
+        ) : filteredPlans.length === 0 ? (
+          <div className="card text-center py-12">
+            <div className="text-6xl mb-4">📋</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              {t('dashboard.noPlansFound')}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              {filters.department || filters.searchQuery || filters.showBlockersOnly || filters.showOffDaysOnly
+                ? 'Try adjusting your filters'
+                : 'No plans submitted for this week yet'}
+            </p>
+            <Link to="/my-plan" className="btn-primary inline-block">
+              {t('plan.createPlan')}
+            </Link>
+          </div>
+        ) : (
+          <>
+            <div className="mb-4 text-sm text-gray-600">
+              {t('dashboard.allPlans')}: {filteredPlans.length}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPlans.map(plan => (
+                <PlanCard key={plan.id} plan={plan} />
+              ))}
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

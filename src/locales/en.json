@@ -17,7 +17,8 @@
     "next": "Next",
     "previous": "Previous",
     "characters": "characters",
-    "none": "None"
+    "none": "None",
+    "clear": "Clear"
   },
   "auth": {
     "login": "Login",

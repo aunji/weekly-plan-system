@@ -484,3 +484,268 @@ src/
 ---
 
 **End of Week 2 Log**
+
+---
+
+## 2025-11-01 18:30 (Bangkok Time)
+
+### Week 3 - Real-time Team Dashboard - COMPLETED ✅
+
+#### Days 15-17: Dashboard Core Components
+
+**Team Plans Hook**
+- ✅ Created `useTeamPlans.ts` hook
+  - Real-time subscription to all weekly plans
+  - Client-side filtering for performance
+  - Department filtering
+  - Search by name (case-insensitive)
+  - "Blockers only" filter
+  - "Off-days only" filter
+  - Automatic cleanup on unmount
+
+**Week Navigation**
+- ✅ Created `WeekSelector.tsx` component
+  - Previous/Current/Next week buttons
+  - Week identifier display (YYYY-WW)
+  - Handles year boundary transitions
+  - Week 52/53 to Week 1 rollover
+  - Disabled state for current week
+  - Clean, centered layout
+
+**Plan Display Cards**
+- ✅ Created `PlanCard.tsx` component
+  - User name and department display
+  - Mode badge (Daily vs Summary)
+  - Blocker badges with severity colors
+    - High: Red (bg-red-100, text-red-800, border-red-300)
+    - Medium: Orange (bg-orange-100, text-orange-800, border-orange-300)
+    - Low: Yellow (bg-yellow-100, text-yellow-800, border-yellow-300)
+  - Off-day badges (blue)
+  - Content preview for first 3 days
+  - Last updated timestamp
+  - Hover effects and transitions
+
+#### Day 18: Blocker & Off-Day Detection
+
+**Blocker Logic**
+- ✅ Active blocker counting per plan
+- ✅ Highest severity detection algorithm
+  - Prioritizes high > medium > low
+  - Returns null if no active blockers
+  - Filters out resolved blockers
+- ✅ Blocker count display with emoji (🚫)
+- ✅ Tooltip showing count
+
+**Off-Day Logic**
+- ✅ Off-day counting per plan
+- ✅ Off-day badge display with emoji (📅)
+- ✅ Italic text styling for off-day tasks
+- ✅ Tooltip showing count
+
+#### Days 19-20: Advanced Filtering
+
+**Filter Bar Component**
+- ✅ Created `FilterBar.tsx` component
+  - Search input (filters by user name)
+  - Department dropdown (all departments)
+  - Checkbox: "Show Blockers Only"
+  - Checkbox: "Show Off Days Only"
+  - "Clear Filter" button (only shows when filters active)
+  - Responsive 4-column grid layout
+
+**Filter State Management**
+- ✅ `DashboardFilters` interface
+  - department?: Department
+  - searchQuery?: string
+  - showBlockersOnly?: boolean
+  - showOffDaysOnly?: boolean
+- ✅ All filters work independently
+- ✅ Combined filter logic (AND operation)
+- ✅ Clear all filters with one click
+
+#### Day 21: Dashboard Integration & Polish
+
+**Dashboard Page Updates**
+- ✅ Updated `DashboardPage.tsx`
+  - Integrated WeekSelector
+  - Integrated FilterBar
+  - Integrated real-time data with useTeamPlans
+  - Responsive 3-column grid (1/2/3 on mobile/tablet/desktop)
+  - Loading spinner with animation
+  - Empty state with helpful messages
+  - Active filter detection in empty state
+  - Plan count display
+  - Header with navigation links
+
+**Responsive Design**
+- ✅ Mobile: 1 column grid
+- ✅ Tablet: 2 column grid (md breakpoint)
+- ✅ Desktop: 3 column grid (lg breakpoint)
+- ✅ Touch-friendly spacing (gap-6)
+- ✅ Proper padding and margins
+
+**Empty States**
+- ✅ Different messages based on context:
+  - With filters: "Try adjusting your filters"
+  - No filters: "No plans submitted for this week yet"
+- ✅ Call-to-action link to create plan
+- ✅ Emoji and friendly copy
+
+**Loading States**
+- ✅ Animated spinner component
+- ✅ Loading text with translations
+- ✅ Card-based loading UI
+
+**Translations**
+- ✅ Added "clear" to en.json and th.json
+- ✅ All dashboard text internationalized
+
+### Week 3 File Structure Created
+
+```
+src/
+├── components/
+│   └── dashboard/
+│       ├── PlanCard.tsx          ← Individual plan display
+│       ├── FilterBar.tsx         ← Search & filters
+│       └── WeekSelector.tsx      ← Week navigation
+├── hooks/
+│   └── useTeamPlans.ts           ← Team data hook with filters
+└── pages/
+    └── DashboardPage.tsx         ← Updated with full dashboard
+```
+
+### Key Features Implemented
+
+1. **Real-time Team Visibility**
+   - Live updates from Firestore
+   - Automatic refresh when plans change
+   - No manual reload needed
+   - Team-wide plan visibility
+
+2. **Smart Filtering**
+   - Multi-criteria filtering (AND logic)
+   - Department-based grouping
+   - Name search with partial matching
+   - Blocker detection across all days
+   - Off-day detection across all days
+   - Clear filters functionality
+
+3. **Blocker Awareness**
+   - Visual severity indicators
+   - Count badges on plan cards
+   - Three severity levels (high/medium/low)
+   - Color-coded for quick scanning
+   - Filter to show only plans with blockers
+
+4. **Week Navigation**
+   - Previous/Next week buttons
+   - Current week highlight
+   - Year boundary handling
+   - Week 52 → Week 1 transitions
+   - Consistent YYYY-WW format
+
+5. **User Experience**
+   - Responsive grid layout
+   - Loading states
+   - Empty states with context
+   - Hover effects
+   - Card-based design
+   - Clean typography
+
+### Technical Highlights
+
+**Real-time Architecture**
+- Firestore `onSnapshot` listeners
+- Automatic subscription cleanup
+- Client-side filtering for performance
+- No redundant queries
+
+**Type Safety**
+- Fixed severity comparison logic with proper typing
+- `Blocker['severity'] | null` return type
+- All filter parameters properly typed
+- Date conversion utilities typed
+
+**Performance Optimizations**
+- Single subscription per week
+- Client-side filtering (no extra queries)
+- Memoized filter calculations
+- Efficient blocker/off-day counting
+
+**Bug Fixes**
+- Fixed severity null comparison errors
+- Removed non-existent formatTimestamp import
+- Fixed getHighestSeverity return type
+- Proper null checking in severity logic
+
+### Production Build
+
+```bash
+✓ built in 4.75s
+dist/assets/index-DV2fwO1D.css   23.29 kB │ gzip:   4.93 kB
+dist/assets/index-CF09Lryg.js   814.48 kB │ gzip: 217.97 kB
+```
+
+Build successful with all features working.
+
+### Testing Checklist
+
+- [x] Real-time plan updates
+- [x] Week navigation (previous/next)
+- [x] Department filtering
+- [x] Name search
+- [x] Blockers only filter
+- [x] Off-days only filter
+- [x] Combined filters
+- [x] Clear all filters
+- [x] Blocker badges with severity
+- [x] Off-day badges
+- [x] Plan count display
+- [x] Loading states
+- [x] Empty states
+- [x] Responsive grid (mobile/tablet/desktop)
+- [x] Navigation links
+- [x] TypeScript build passes
+- [x] Production build successful
+
+---
+
+## Next Phase: Week 4 - Plan Details & Analytics
+
+### Planned Features
+1. **Plan Detail View**
+   - Full plan display modal/page
+   - All tasks for the week
+   - All blockers with details
+   - Update history/log
+   - Edit button (for own plan)
+
+2. **Analytics Dashboard**
+   - Weekly completion statistics
+   - Blocker trends over time
+   - Department comparison charts
+   - Export data functionality
+
+3. **Advanced Features**
+   - Plan comparison (week-over-week)
+   - Team metrics
+   - Notification system
+   - Email digests
+
+### Files to Create
+- `src/components/dashboard/PlanDetailModal.tsx`
+- `src/components/analytics/WeeklyStats.tsx`
+- `src/components/analytics/BlockerTrends.tsx`
+- `src/hooks/useAnalytics.ts`
+- `src/pages/AnalyticsPage.tsx`
+
+### Estimated Timeline
+- Days 22-23: Plan detail view
+- Days 24-25: Basic analytics
+- Days 26-27: Charts and visualizations
+- Day 28: Export functionality
+
+---
+
+**End of Week 3 Log**
