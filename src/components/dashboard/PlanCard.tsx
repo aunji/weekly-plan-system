@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { WeeklyPlan, Blocker } from '@/types';
 import { timestampToDate } from '@/utils/firestore';
 import { formatBangkokDate } from '@/utils/date';
+import { PlanDetailModal } from './PlanDetailModal';
 
 interface PlanCardProps {
   plan: WeeklyPlan;
@@ -10,6 +11,7 @@ interface PlanCardProps {
 
 export const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Count active blockers
   const activeBlockers = plan.dailyPlans.reduce((count, day) => {
@@ -57,7 +59,11 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
   };
 
   return (
-    <div className="card hover:shadow-lg transition-shadow">
+    <>
+      <div
+        className="card hover:shadow-lg transition-shadow cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
         <div>
@@ -132,10 +138,14 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
         )}
       </div>
 
-      {/* Footer */}
-      <div className="pt-3 border-t border-gray-200 text-xs text-gray-500">
-        {t('dashboard.lastUpdated')}: {formatBangkokDate(timestampToDate(plan.updatedAt), 'MMM dd, HH:mm')}
+        {/* Footer */}
+        <div className="pt-3 border-t border-gray-200 text-xs text-gray-500">
+          {t('dashboard.lastUpdated')}: {formatBangkokDate(timestampToDate(plan.updatedAt), 'MMM dd, HH:mm')}
+        </div>
       </div>
-    </div>
+
+      {/* Modal */}
+      <PlanDetailModal plan={plan} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };

@@ -749,3 +749,291 @@ Build successful with all features working.
 ---
 
 **End of Week 3 Log**
+
+---
+
+## 2025-11-01 21:00 (Bangkok Time)
+
+### Week 4 - Plan Details & Analytics Dashboard - COMPLETED ✅
+
+#### Days 22-23: Plan Detail View
+
+**Plan Detail Modal**
+- ✅ Created `PlanDetailModal.tsx` component
+  - Full-screen modal with backdrop
+  - Displays complete plan details
+  - All tasks for all days (Monday-Friday)
+  - All blockers with severity badges
+  - Blocker resolution status
+  - Update history/change log (last 5 entries)
+  - Edit button (only shown for own plan)
+  - Close button and click-outside-to-close
+  - Responsive layout with scrollable content
+
+**Modal Integration**
+- ✅ Updated `PlanCard.tsx` to be clickable
+  - Added cursor-pointer styling
+  - Click handler to open modal
+  - Modal state management
+  - Clean integration with existing card design
+
+**Features**
+- Daily mode: Shows all tasks and blockers per day
+- Summary mode: Shows achievements, challenges, next week plans
+- Color-coded blocker severity (red/orange/yellow)
+- Off-day detection and display
+- Last updated timestamp
+- Update history with timestamps
+
+#### Days 24-25: Analytics System
+
+**Analytics Hook**
+- ✅ Created `useAnalytics.ts` hook
+  - Real-time analytics calculations
+  - Weekly statistics aggregation
+  - Department-based breakdowns
+  - Blocker analysis (total/active/resolved by severity)
+  - Off-day tracking by department
+  - Task statistics (total, average per plan)
+  - Mode distribution (daily vs summary)
+
+**Multi-Week Analytics**
+- ✅ Created `useMultiWeekAnalytics` hook
+  - Tracks trends across multiple weeks
+  - Blocker trends over time
+  - Plan submission trends
+  - Average calculations per week
+
+#### Days 26-27: Analytics Visualizations
+
+**Weekly Stats Component**
+- ✅ Created `WeeklyStats.tsx` component
+  - 4 overview cards with gradients:
+    - Total Plans (blue)
+    - Active Blockers (red) with resolved count
+    - Total Off Days (blue)
+    - Avg Tasks/Plan (green) with total
+  - Mode distribution chart (Daily vs Summary)
+  - Blocker severity breakdown (High/Medium/Low with percentages)
+  - Department-wise plan breakdown with off-day counts
+  - Color-coded indicators throughout
+  - Percentage calculations
+
+**Blocker Trends Component**
+- ✅ Created `BlockerTrends.tsx` component
+  - Horizontal bar charts for blocker trends
+  - Active vs Resolved visualization (red/green)
+  - Plan submission trends over weeks
+  - Summary statistics:
+    - Total weeks tracked
+    - Average blockers per week
+    - Average plans per week
+  - Responsive bar sizing
+  - Week-by-week comparison
+
+#### Day 28: Analytics Page & Export
+
+**Analytics Page**
+- ✅ Created `AnalyticsPage.tsx`
+  - Full analytics dashboard
+  - Week selector integration
+  - Toggle for 4-week trends view
+  - Export to CSV functionality
+  - Export to JSON functionality
+  - Loading states
+  - Empty states
+  - Responsive layout
+
+**Export Functionality**
+- ✅ CSV Export
+  - Columns: Week, User, Department, Mode, Tasks, Blockers (H/M/L), Off Days
+  - Automatic download
+  - Filename: weekly-plans-{week}.csv
+
+- ✅ JSON Export
+  - Structured data export
+  - Includes full analytics
+  - All plan details
+  - Timestamp metadata
+  - Filename: weekly-plans-{week}.json
+
+**Navigation Updates**
+- ✅ Added Analytics link to all pages
+  - DashboardPage
+  - MyPlanPage
+  - AnalyticsPage (active state)
+- ✅ Updated App.tsx with /analytics route
+- ✅ Protected route configuration
+
+**Translations**
+- ✅ Added analytics section to en.json
+- ✅ Added analytics section to th.json
+- ✅ 30+ new translation keys for analytics features
+
+### Week 4 File Structure Created
+
+```
+src/
+├── components/
+│   ├── analytics/
+│   │   ├── WeeklyStats.tsx        ← Statistics cards
+│   │   └── BlockerTrends.tsx      ← Trend visualizations
+│   └── dashboard/
+│       └── PlanDetailModal.tsx    ← Full plan detail view
+├── hooks/
+│   └── useAnalytics.ts            ← Analytics calculations
+├── pages/
+│   ├── AnalyticsPage.tsx          ← Analytics dashboard
+│   ├── DashboardPage.tsx          ← Updated navigation
+│   └── MyPlanPage.tsx             ← Updated navigation
+└── locales/
+    ├── en.json                    ← Analytics translations
+    └── th.json                    ← Analytics translations
+```
+
+### Key Features Implemented
+
+1. **Interactive Plan Details**
+   - Full plan view in modal
+   - All tasks and blockers visible
+   - Update history tracking
+   - Edit access control (own plans only)
+   - Clean, scrollable interface
+
+2. **Comprehensive Analytics**
+   - Real-time statistics
+   - Department breakdowns
+   - Blocker severity analysis
+   - Mode distribution
+   - Task averages
+   - Off-day tracking
+
+3. **Trend Analysis**
+   - 4-week blocker trends
+   - Plan submission trends
+   - Active vs resolved blockers
+   - Visual bar charts
+   - Summary statistics
+
+4. **Data Export**
+   - CSV format for spreadsheets
+   - JSON format for programmatic access
+   - Full plan details included
+   - Analytics metadata
+   - Easy download workflow
+
+5. **User Experience**
+   - Clickable plan cards
+   - Modal with backdrop
+   - Responsive visualizations
+   - Color-coded indicators
+   - Loading and empty states
+   - Intuitive navigation
+
+### Technical Highlights
+
+**Real-time Analytics**
+- Live calculation from Firestore subscriptions
+- Efficient aggregation algorithms
+- Client-side processing for performance
+- Multi-week data handling
+
+**Type Safety**
+- Fixed UpdateLog property usage
+- Proper AuthContext userData access
+- Removed unused variables
+- All components fully typed
+
+**Performance**
+- Efficient filtering and aggregation
+- Minimal re-renders
+- Optimized calculations
+- Single subscription per week
+
+**Bug Fixes**
+- Fixed `user` → `userData` in PlanDetailModal
+- Fixed UpdateLog properties (field, newValue instead of action, changedFields)
+- Removed unused `totalPercent` variable in BlockerTrends
+- All TypeScript errors resolved
+
+### Production Build
+
+```bash
+✓ built in 4.76s
+dist/assets/index-BWDltPcs.css   28.26 kB │ gzip:   5.71 kB
+dist/assets/index-CAjxJB9I.js   840.63 kB │ gzip: 222.64 kB
+```
+
+Build successful. Bundle size increased from 814KB to 840KB (+26KB) due to analytics components and visualizations.
+
+### Testing Checklist
+
+- [x] Plan detail modal opens on card click
+- [x] Modal displays all plan information
+- [x] Edit button works (redirects to My Plan)
+- [x] Close button and backdrop click work
+- [x] Update history displays correctly
+- [x] Analytics page loads correctly
+- [x] Weekly stats calculate properly
+- [x] Department breakdown accurate
+- [x] Blocker severity analysis correct
+- [x] Mode distribution percentages correct
+- [x] 4-week trends toggle works
+- [x] Blocker trends visualization renders
+- [x] Plan submission trends render
+- [x] CSV export downloads correctly
+- [x] JSON export downloads correctly
+- [x] Week selector changes data
+- [x] Loading states display
+- [x] Empty states display
+- [x] Navigation links work
+- [x] All translations display correctly
+- [x] TypeScript build passes
+- [x] Production build successful
+
+---
+
+## Next Phase: Week 5 - Polish & Deployment
+
+### Planned Features
+1. **Production Optimization**
+   - Code splitting for better performance
+   - Image optimization
+   - Lazy loading components
+   - Performance monitoring
+
+2. **Advanced Features**
+   - Email notifications for blockers
+   - Weekly summary email digest
+   - Plan templates
+   - Bulk operations
+
+3. **Testing & Documentation**
+   - Unit tests for critical functions
+   - Integration tests
+   - User documentation
+   - API documentation
+
+4. **Deployment**
+   - Firebase Hosting setup
+   - Environment configuration
+   - CI/CD pipeline
+   - Production deployment
+
+### Files to Create/Update
+- `src/components/templates/*`
+- `src/services/emailService.ts`
+- `tests/*`
+- `README.md` (comprehensive)
+- `.github/workflows/deploy.yml`
+- Firebase hosting configuration
+
+### Estimated Timeline
+- Days 29-30: Code optimization
+- Days 31-32: Advanced features
+- Days 33-34: Testing
+- Day 35: Deployment
+
+---
+
+**End of Week 4 Log**

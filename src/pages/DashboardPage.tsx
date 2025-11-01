@@ -45,6 +45,12 @@ export const DashboardPage: React.FC = () => {
                 >
                   {t('navigation.myPlan')}
                 </Link>
+                <Link
+                  to="/analytics"
+                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                >
+                  Analytics
+                </Link>
               </nav>
               <LanguageSwitcher />
               <span className="text-sm text-gray-600">{userData?.name}</span>

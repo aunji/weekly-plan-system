@@ -118,6 +118,37 @@
   "navigation": {
     "dashboard": "Dashboard",
     "myPlan": "My Plan",
-    "profile": "Profile"
+    "profile": "Profile",
+    "analytics": "Analytics"
+  },
+  "analytics": {
+    "title": "Analytics Dashboard",
+    "weeklyStats": "Weekly Statistics",
+    "totalPlans": "Total Plans",
+    "activeBlockers": "Active Blockers",
+    "totalOffDays": "Total Off Days",
+    "avgTasksPerPlan": "Avg Tasks/Plan",
+    "resolved": "resolved",
+    "totalTasks": "total tasks",
+    "modeDistribution": "Planning Mode Distribution",
+    "blockerSeverityBreakdown": "Blocker Severity Breakdown",
+    "plansByDepartment": "Plans by Department",
+    "offDays": "off-days",
+    "blockerTrends": "Blocker Trends Over Time",
+    "planSubmissions": "Plan Submissions Over Time",
+    "active": "Active",
+    "total": "total",
+    "plans": "plans",
+    "totalWeeksTracked": "Total Weeks Tracked",
+    "avgBlockersPerWeek": "Avg Blockers/Week",
+    "avgPlansPerWeek": "Avg Plans/Week",
+    "showTrends": "Show Trends",
+    "hideTrends": "Hide Trends",
+    "exportCSV": "Export CSV",
+    "exportJSON": "Export JSON",
+    "fourWeekTrends": "4-Week Trends",
+    "noDataAvailable": "No Data Available",
+    "noPlansThisWeek": "No plans found for this week.",
+    "updateHistory": "Update History"
   }
 }

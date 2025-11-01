@@ -118,6 +118,37 @@
   "navigation": {
     "dashboard": "แดชบอร์ด",
     "myPlan": "แผนของฉัน",
-    "profile": "โปรไฟล์"
+    "profile": "โปรไฟล์",
+    "analytics": "การวิเคราะห์"
+  },
+  "analytics": {
+    "title": "แดชบอร์ดการวิเคราะห์",
+    "weeklyStats": "สถิติรายสัปดาห์",
+    "totalPlans": "แผนทั้งหมด",
+    "activeBlockers": "อุปสรรคที่ยังมี",
+    "totalOffDays": "วันหยุดทั้งหมด",
+    "avgTasksPerPlan": "งานเฉลี่ย/แผน",
+    "resolved": "แก้ไขแล้ว",
+    "totalTasks": "งานทั้งหมด",
+    "modeDistribution": "การกระจายของโหมดการวางแผน",
+    "blockerSeverityBreakdown": "การแบ่งความรุนแรงของอุปสรรค",
+    "plansByDepartment": "แผนตามแผนก",
+    "offDays": "วันหยุด",
+    "blockerTrends": "แนวโน้มอุปสรรคตามเวลา",
+    "planSubmissions": "การส่งแผนตามเวลา",
+    "active": "ยังมี",
+    "total": "ทั้งหมด",
+    "plans": "แผน",
+    "totalWeeksTracked": "สัปดาห์ที่ติดตามทั้งหมด",
+    "avgBlockersPerWeek": "อุปสรรคเฉลี่ย/สัปดาห์",
+    "avgPlansPerWeek": "แผนเฉลี่ย/สัปดาห์",
+    "showTrends": "แสดงแนวโน้ม",
+    "hideTrends": "ซ่อนแนวโน้ม",
+    "exportCSV": "ส่งออก CSV",
+    "exportJSON": "ส่งออก JSON",
+    "fourWeekTrends": "แนวโน้ม 4 สัปดาห์",
+    "noDataAvailable": "ไม่มีข้อมูล",
+    "noPlansThisWeek": "ไม่พบแผนสำหรับสัปดาห์นี้",
+    "updateHistory": "ประวัติการอัปเดต"
   }
 }
