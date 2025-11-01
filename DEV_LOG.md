@@ -273,3 +273,214 @@ To push the code to GitHub:
 ---
 
 **End of Week 1 Log**
+
+---
+
+## 2025-11-01 15:00 (Bangkok Time)
+
+### Week 2 - Plan Editor - COMPLETED ✅
+
+#### Days 8-11: Plan Editor UI Components
+
+**Daily Mode Components**
+- ✅ Created `BlockerInput.tsx` component
+  - Add/remove blockers dynamically
+  - Severity selection (low, medium, high)
+  - Color-coded visual indicators
+  - Description textarea for each blocker
+
+- ✅ Created `DailyPlanForm.tsx` component
+  - Monday-Friday task inputs
+  - Dynamic task addition/removal
+  - Off-day toggle for each day
+  - Integrated BlockerInput for each day
+  - Auto-initialization of empty plans
+
+**Weekly Summary Components**
+- ✅ Created `WeeklySummaryForm.tsx` component
+  - Achievements textarea with character count
+  - Challenges textarea with character count
+  - Next week plans textarea with character count
+  - Clean card-based layout
+
+**Main Editor Component**
+- ✅ Created `PlanEditor.tsx` component
+  - Mode selector (Daily vs Summary)
+  - Unsaved changes warning on mode switch
+  - Success/error messaging
+  - Keyboard shortcut support (Ctrl+S / Cmd+S)
+  - Loading states
+  - Sticky save button at bottom
+
+#### Days 12-13: Firestore Integration
+
+**Plan Service**
+- ✅ Created `planService.ts` with full CRUD operations
+  - `createWeeklyPlan()` - Create new plans with update logs
+  - `updateWeeklyPlan()` - Update existing plans with change tracking
+  - `getWeeklyPlan()` - Fetch plan by user and week
+  - `getAllWeeklyPlans()` - Fetch all plans for a week
+  - `subscribeToWeeklyPlan()` - Real-time updates for single plan
+  - `subscribeToAllWeeklyPlans()` - Real-time updates for all plans
+
+**Custom Hook**
+- ✅ Created `usePlan.ts` hook
+  - Manages plan state and loading
+  - Auto-subscribes to real-time updates
+  - `savePlan()` function for create/update
+  - `refreshPlan()` for manual refresh
+  - Error handling with user-friendly messages
+
+#### Day 14: Integration & Polish
+
+**My Plan Page**
+- ✅ Created `MyPlanPage.tsx`
+  - Full integration with PlanEditor
+  - Week identifier display
+  - Navigation to Dashboard
+  - Loading states
+  - Error handling
+
+**Routing & Navigation**
+- ✅ Updated `App.tsx` with `/my-plan` route
+- ✅ Updated `DashboardPage.tsx` with navigation links
+- ✅ Added active link styling
+
+**Translations**
+- ✅ Added missing translations for character counts
+- ✅ Added "none" translation for empty states
+
+**Build & Testing**
+- ✅ Fixed TypeScript type imports (`import type`)
+- ✅ Fixed Department type consistency
+- ✅ Production build successful (802KB)
+- ✅ All components properly typed
+
+### Week 2 File Structure Created
+
+```
+src/
+├── components/
+│   └── plan/
+│       ├── BlockerInput.tsx       ← Blocker management
+│       ├── DailyPlanForm.tsx      ← Mon-Fri task editor
+│       ├── WeeklySummaryForm.tsx  ← Summary mode editor
+│       └── PlanEditor.tsx         ← Main editor component
+├── hooks/
+│   └── usePlan.ts                 ← Plan CRUD hook
+├── services/
+│   └── planService.ts             ← Firestore integration
+└── pages/
+    ├── MyPlanPage.tsx             ← My Plan page
+    └── DashboardPage.tsx          ← Updated with navigation
+```
+
+### Key Features Implemented
+
+1. **Dual Mode Planning**
+   - Daily mode: Monday-Friday with tasks per day
+   - Summary mode: Single summary for the whole week
+   - Mode switching with unsaved changes warning
+
+2. **Blocker Management**
+   - Add unlimited blockers per day
+   - Three severity levels (low, medium, high)
+   - Color-coded visual feedback
+   - Easy add/remove functionality
+
+3. **Real-time Synchronization**
+   - Firestore real-time listeners
+   - Automatic updates across sessions
+   - Optimistic UI updates
+
+4. **Update Logging**
+   - Timestamp for all changes
+   - Field-level change tracking
+   - User ID for audit trail
+   - Bangkok timezone for all timestamps
+
+5. **User Experience**
+   - Auto-save with Ctrl+S keyboard shortcut
+   - Character counters for text areas
+   - Loading states and error messages
+   - Sticky save button
+   - Unsaved changes warnings
+
+### Technical Highlights
+
+**Type Safety**
+- Full TypeScript coverage
+- Proper type imports for verbatimModuleSyntax
+- Department type consistency
+
+**State Management**
+- React hooks for local state
+- Firestore for persistence
+- Real-time subscriptions
+
+**Bangkok Timezone**
+- All timestamps use Asia/Bangkok
+- Week identifier generation
+- Date formatting utilities
+
+### Testing Checklist
+
+- [x] Plan creation (new plan)
+- [x] Plan updates (existing plan)
+- [x] Mode switching
+- [x] Task add/remove
+- [x] Blocker add/remove with severity
+- [x] Off-day toggle
+- [x] Keyboard shortcuts (Ctrl+S)
+- [x] Real-time updates
+- [x] Navigation between pages
+- [x] Loading states
+- [x] Error handling
+- [x] TypeScript build passes
+- [x] Production build successful
+
+---
+
+## Next Phase: Week 3 - Dashboard
+
+### Planned Features
+1. **Real-time Team Dashboard**
+   - Display all team members' plans
+   - Week selector (previous/current/next)
+   - Plan cards with preview
+
+2. **Blocker & Off-Day Indicators**
+   - Visual blocker badges (red)
+   - Blocker count display
+   - Off-day calendar icons
+   - Severity-based color coding
+
+3. **Filtering & Search**
+   - Department filter
+   - Project filter
+   - Search by name
+   - "Blockers only" filter
+   - "Off-days only" filter
+
+4. **Responsive Design**
+   - Mobile-optimized grid layout
+   - Touch-friendly interactions
+   - Adaptive columns (1/2/3 based on screen size)
+
+### Files to Create
+- `src/components/dashboard/PlanCard.tsx`
+- `src/components/dashboard/FilterBar.tsx`
+- `src/components/dashboard/WeekSelector.tsx`
+- `src/hooks/useTeamPlans.ts`
+- Updated `DashboardPage.tsx`
+
+### Estimated Timeline
+- Days 15-16: Dashboard layout & plan cards
+- Day 17: Real-time updates
+- Day 18: Blocker & off-day indicators
+- Days 19-20: Advanced filtering
+- Day 21: Polish & responsiveness
+
+---
+
+**End of Week 2 Log**

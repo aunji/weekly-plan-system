@@ -5,6 +5,7 @@ import { LoginPage } from '@/pages/LoginPage';
 import { SignupPage } from '@/pages/SignupPage';
 import { ProfileSetupPage } from '@/pages/ProfileSetupPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { MyPlanPage } from '@/pages/MyPlanPage';
 
 function App() {
   return (
@@ -26,6 +27,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-plan"
+            element={
+              <ProtectedRoute>
+                <MyPlanPage />
               </ProtectedRoute>
             }
           />

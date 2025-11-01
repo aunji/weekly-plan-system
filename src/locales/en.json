@@ -15,7 +15,9 @@
     "export": "Export",
     "back": "Back",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "characters": "characters",
+    "none": "None"
   },
   "auth": {
     "login": "Login",
