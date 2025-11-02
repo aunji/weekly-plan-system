@@ -83,6 +83,7 @@ export const weeklyPlanConverter: FirestoreDataConverter<WeeklyPlan> = {
       dailyPlans: plan.dailyPlans.map(dp => ({
         date: dp.date,
         tasks: dp.tasks,
+        project: dp.project || null,
         isOffDay: dp.isOffDay,
         blockers: dp.blockers.map(b => ({
           id: b.id,
@@ -112,7 +113,13 @@ export const weeklyPlanConverter: FirestoreDataConverter<WeeklyPlan> = {
       userName: data.userName,
       userDepartment: data.userDepartment,
       mode: data.mode,
-      dailyPlans: data.dailyPlans || [],
+      dailyPlans: (data.dailyPlans || []).map((dp: any) => ({
+        date: dp.date,
+        tasks: dp.tasks || [],
+        project: dp.project || undefined,
+        isOffDay: dp.isOffDay || false,
+        blockers: dp.blockers || [],
+      })),
       summary: data.summary || null,
       updateLogs: data.updateLogs || [],
       createdAt: data.createdAt,
