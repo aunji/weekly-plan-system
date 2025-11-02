@@ -37,4 +37,5 @@ ui-debug.log
 
 # Deployment packages
 *.zip
+!upload_ftp.zip
 *.tar.gz
