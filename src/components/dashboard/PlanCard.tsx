@@ -68,7 +68,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
       <div className="flex justify-between items-start mb-3">
         <div>
           <h3 className="font-semibold text-gray-900">{plan.userName}</h3>
-          <p className="text-xs text-gray-500">{t(`departments.${plan.userDepartment}`)}</p>
+          <p className="text-xs text-gray-500">{plan.userDepartment}</p>
         </div>
 
         {/* Indicators */}

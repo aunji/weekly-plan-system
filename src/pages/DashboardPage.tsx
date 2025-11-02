@@ -46,10 +46,16 @@ export const DashboardPage: React.FC = () => {
                   {t('navigation.myPlan')}
                 </Link>
                 <Link
-                  to="/analytics"
+                  to="/departments"
                   className="text-sm text-gray-600 hover:text-gray-900 font-medium"
                 >
-                  Analytics
+                  {t('navigation.departments')}
+                </Link>
+                <Link
+                  to="/profile"
+                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                >
+                  {t('navigation.profile')}
                 </Link>
               </nav>
               <LanguageSwitcher />
@@ -109,7 +115,7 @@ export const DashboardPage: React.FC = () => {
                 ? 'Try adjusting your filters'
                 : 'No plans submitted for this week yet'}
             </p>
-            <Link to="/my-plan" className="btn-primary inline-block">
+            <Link to={`/my-plan?week=${currentWeek}`} className="btn-primary inline-block">
               {t('plan.createPlan')}
             </Link>
           </div>

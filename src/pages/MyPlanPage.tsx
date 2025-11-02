@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePlan } from '@/hooks/usePlan';
 import { PlanEditor } from '@/components/plan/PlanEditor';
@@ -10,7 +10,10 @@ import { getCurrentWeekIdentifier, formatWeekIdentifier } from '@/utils/date';
 export const MyPlanPage: React.FC = () => {
   const { t } = useTranslation();
   const { userData, logout } = useAuth();
-  const weekIdentifier = getCurrentWeekIdentifier();
+  const [searchParams] = useSearchParams();
+
+  // Read week from URL parameter, fallback to current week if not provided
+  const weekIdentifier = searchParams.get('week') || getCurrentWeekIdentifier();
 
   const { plan, loading, error, savePlan } = usePlan(
     userData?.id || '',
@@ -58,10 +61,16 @@ export const MyPlanPage: React.FC = () => {
                   {t('navigation.myPlan')}
                 </Link>
                 <Link
-                  to="/analytics"
+                  to="/departments"
                   className="text-sm text-gray-600 hover:text-gray-900 font-medium"
                 >
-                  Analytics
+                  {t('navigation.departments')}
+                </Link>
+                <Link
+                  to="/profile"
+                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                >
+                  {t('navigation.profile')}
                 </Link>
               </nav>
               <LanguageSwitcher />

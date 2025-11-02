@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import type { DailyPlan } from '@/types';
 import { BlockerInput } from './BlockerInput';
 import { getWeekdayDates, getCurrentWeekIdentifier } from '@/utils/date';
+import { useProjects } from '@/hooks/useProjects';
 
 interface DailyPlanFormProps {
   dailyPlans: DailyPlan[];
@@ -20,6 +22,7 @@ export const DailyPlanForm: React.FC<DailyPlanFormProps> = ({
   disabled,
 }) => {
   const { t } = useTranslation();
+  const { activeProjects } = useProjects();
   const week = weekIdentifier || getCurrentWeekIdentifier();
   const weekdayDates = getWeekdayDates(week);
 
@@ -93,6 +96,34 @@ export const DailyPlanForm: React.FC<DailyPlanFormProps> = ({
             </div>
           ) : (
             <>
+              {/* Project Selector */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t('plan.project')}
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    value={plan.project || ''}
+                    onChange={e => updateDailyPlan(planIndex, 'project', e.target.value || undefined)}
+                    disabled={disabled}
+                    className="flex-1 rounded-md border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-sm disabled:opacity-50"
+                  >
+                    <option value="">{t('plan.selectProject')}</option>
+                    {activeProjects.map(project => (
+                      <option key={project.id} value={project.id}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
+                  <Link
+                    to="/profile"
+                    className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 whitespace-nowrap"
+                  >
+                    + {t('plan.addProject')}
+                  </Link>
+                </div>
+              </div>
+
               {/* Tasks */}
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between items-center">

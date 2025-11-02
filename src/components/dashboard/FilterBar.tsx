@@ -1,24 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { DashboardFilters, Department } from '@/types';
+import { useDepartments } from '@/hooks/useDepartments';
 
 interface FilterBarProps {
   filters: DashboardFilters;
   onFiltersChange: (filters: DashboardFilters) => void;
 }
 
-const departments: Department[] = [
-  'IT',
-  'Game',
-  'Design',
-  'QA',
-  'Marketing',
-  'Management',
-  'Other',
-];
-
 export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFiltersChange }) => {
   const { t } = useTranslation();
+  const { activeDepartments } = useDepartments();
 
   const handleDepartmentChange = (department: Department | '') => {
     onFiltersChange({
@@ -88,9 +80,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({ filters, onFiltersChange }
             className="w-full rounded-md border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-sm"
           >
             <option value="">{t('dashboard.allPlans')}</option>
-            {departments.map(dept => (
-              <option key={dept} value={dept}>
-                {t(`departments.${dept}`)}
+            {activeDepartments.map(dept => (
+              <option key={dept.id} value={dept.name}>
+                {dept.name}
               </option>
             ))}
           </select>

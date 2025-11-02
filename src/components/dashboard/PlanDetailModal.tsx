@@ -52,7 +52,7 @@ export const PlanDetailModal: React.FC<PlanDetailModalProps> = ({ plan, isOpen, 
             <div className="flex justify-between items-start">
               <div>
                 <h2 className="text-2xl font-bold">{plan.userName}</h2>
-                <p className="text-primary-100 text-sm">{t(`departments.${plan.userDepartment}`)}</p>
+                <p className="text-primary-100 text-sm">{plan.userDepartment}</p>
                 <p className="text-primary-200 text-xs mt-1">
                   {t('plan.weeklyPlan')}: {plan.weekIdentifier}
                 </p>

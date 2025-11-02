@@ -6,11 +6,11 @@ import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
 // Lazy load all pages for better code splitting
 const LoginPage = lazy(() => import('@/pages/LoginPage').then(m => ({ default: m.LoginPage })));
-const SignupPage = lazy(() => import('@/pages/SignupPage').then(m => ({ default: m.SignupPage })));
 const ProfileSetupPage = lazy(() => import('@/pages/ProfileSetupPage').then(m => ({ default: m.ProfileSetupPage })));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const MyPlanPage = lazy(() => import('@/pages/MyPlanPage').then(m => ({ default: m.MyPlanPage })));
-const AnalyticsPage = lazy(() => import('@/pages/AnalyticsPage').then(m => ({ default: m.AnalyticsPage })));
+const ProfilePage = lazy(() => import('@/pages/ProfilePage').then(m => ({ default: m.ProfilePage })));
+const DepartmentPage = lazy(() => import('@/pages/DepartmentPage').then(m => ({ default: m.DepartmentPage })));
 
 // Loading component
 const PageLoader = () => (
@@ -49,7 +49,6 @@ function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
           <Route
             path="/setup-profile"
             element={
@@ -75,10 +74,18 @@ function App() {
             }
           />
           <Route
-            path="/analytics"
+            path="/departments"
             element={
               <ProtectedRoute>
-                <AnalyticsPage />
+                <DepartmentPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />

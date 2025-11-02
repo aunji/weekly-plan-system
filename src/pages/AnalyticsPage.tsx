@@ -149,7 +149,19 @@ export const AnalyticsPage: React.FC = () => {
                   to="/analytics"
                   className="text-sm text-primary-600 hover:text-primary-700 font-medium"
                 >
-                  Analytics
+                  {t('navigation.analytics')}
+                </Link>
+                <Link
+                  to="/departments"
+                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                >
+                  {t('navigation.departments')}
+                </Link>
+                <Link
+                  to="/profile"
+                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                >
+                  {t('navigation.profile')}
                 </Link>
               </nav>
               <LanguageSwitcher />

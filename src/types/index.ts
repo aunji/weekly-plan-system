@@ -39,12 +39,22 @@ export interface Project {
   updatedAt: Timestamp;
 }
 
+// Department Entity (for CRUD operations)
+export interface DepartmentEntity {
+  id: string;
+  name: string;
+  isActive: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
 // Weekly Plan types
 export type PlanMode = 'daily' | 'summary';
 
 export interface DailyPlan {
   date: string; // Format: YYYY-MM-DD
   tasks: string[];
+  project?: string; // Project ID
   isOffDay: boolean;
   blockers: Blocker[];
 }
