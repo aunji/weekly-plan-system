@@ -10,7 +10,7 @@ import type { Department, Language } from '@/types';
 export const ProfilePage: React.FC = () => {
   const { t, i18n } = useTranslation();
   const { userData, updateUserProfile, logout } = useAuth();
-  const { projects, activeProjects, createProject, updateProject, toggleProjectStatus } = useProjects();
+  const { projects, createProject, updateProject, toggleProjectStatus } = useProjects();
   const { activeDepartments } = useDepartments();
 
   // User settings form
