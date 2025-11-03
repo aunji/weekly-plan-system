@@ -42,9 +42,12 @@ const PageLoader = () => (
 );
 
 function App() {
+  // Get base URL from environment variable for React Router basename
+  const basename = import.meta.env.VITE_BASE_URL || '/';
+
   return (
     <ErrorBoundary>
-      <Router>
+      <Router basename={basename}>
         <AuthProvider>
           <Suspense fallback={<PageLoader />}>
             <Routes>
