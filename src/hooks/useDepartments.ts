@@ -25,10 +25,10 @@ export const useDepartments = () => {
     loadDepartments();
   }, []);
 
-  const createDepartment = async (name: string): Promise<DepartmentEntity | null> => {
+  const createDepartment = async (name: string, colorHex?: string, colorHexLight?: string): Promise<DepartmentEntity | null> => {
     try {
       setError(null);
-      const newDepartment = await departmentService.createDepartment(name);
+      const newDepartment = await departmentService.createDepartment(name, colorHex, colorHexLight);
       setDepartments(prev => [...prev, newDepartment].sort((a, b) => a.name.localeCompare(b.name)));
       return newDepartment;
     } catch (err) {
@@ -38,7 +38,7 @@ export const useDepartments = () => {
     }
   };
 
-  const updateDepartment = async (departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive'>>): Promise<boolean> => {
+  const updateDepartment = async (departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive' | 'colorHex' | 'colorHexLight' | 'iconURL'>>): Promise<boolean> => {
     try {
       setError(null);
       await departmentService.updateDepartment(departmentId, updates);

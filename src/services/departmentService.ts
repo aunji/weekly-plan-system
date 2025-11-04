@@ -22,6 +22,7 @@ const departmentConverter = {
     name: department.name,
     colorHex: department.colorHex,
     colorHexLight: department.colorHexLight,
+    iconURL: department.iconURL,
     isActive: department.isActive,
     createdAt: department.createdAt,
     updatedAt: department.updatedAt,
@@ -33,6 +34,7 @@ const departmentConverter = {
       name: data.name,
       colorHex: data.colorHex || '#6b7280', // Default gray
       colorHexLight: data.colorHexLight || '#f3f4f6', // Default light gray
+      iconURL: data.iconURL,
       isActive: data.isActive,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
@@ -96,7 +98,7 @@ export const departmentService = {
   /**
    * Update a department
    */
-  async updateDepartment(departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive' | 'colorHex' | 'colorHexLight'>>): Promise<void> {
+  async updateDepartment(departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive' | 'colorHex' | 'colorHexLight' | 'iconURL'>>): Promise<void> {
     const departmentRef = doc(db, DEPARTMENTS_COLLECTION, departmentId);
     await updateDoc(departmentRef, {
       ...updates,

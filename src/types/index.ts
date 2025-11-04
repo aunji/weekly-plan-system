@@ -47,6 +47,7 @@ export interface DepartmentEntity {
   name: string;
   colorHex: string; // Primary department color (e.g., "#06b6d4")
   colorHexLight: string; // Light variant for backgrounds (e.g., "#cffafe")
+  iconURL?: string; // Firebase Storage URL for department icon (SVG)
   isActive: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;
