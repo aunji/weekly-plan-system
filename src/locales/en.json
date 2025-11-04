@@ -59,7 +59,17 @@
     "activate": "Activate",
     "deactivate": "Deactivate",
     "projectCreated": "Project created successfully",
-    "projectUpdated": "Project updated successfully"
+    "projectUpdated": "Project updated successfully",
+    "uploadAvatar": "Upload Photo",
+    "removeAvatar": "Remove Photo",
+    "avatarRequirements": "JPG, PNG, GIF or WEBP. Max 5MB.",
+    "avatarInvalidType": "Invalid file type. Please upload JPG, PNG, GIF or WEBP.",
+    "avatarTooLarge": "File is too large. Maximum size is 5MB.",
+    "avatarUploadError": "Failed to upload photo. Please try again.",
+    "avatarRemoveError": "Failed to remove photo. Please try again.",
+    "confirmRemoveAvatar": "Are you sure you want to remove your profile photo?",
+    "departmentColor": "Department Color",
+    "departmentColorLight": "Light Background Color"
   },
   "department": {
     "manageDepartments": "Manage Departments",
@@ -72,7 +82,10 @@
     "deactivate": "Deactivate",
     "departmentCreated": "Department created successfully",
     "departmentUpdated": "Department updated successfully",
-    "departmentDeleted": "Department deleted successfully"
+    "departmentDeleted": "Department deleted successfully",
+    "colorPicker": "Pick Color",
+    "colorHex": "Primary Color",
+    "colorHexLight": "Background Color"
   },
   "departments": {
     "IT": "IT",

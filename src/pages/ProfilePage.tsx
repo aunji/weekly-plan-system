@@ -5,11 +5,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useProjects } from '@/hooks/useProjects';
 import { useDepartments } from '@/hooks/useDepartments';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
+import { AvatarUploader } from '@/components/common/AvatarUploader';
 import type { Department, Language } from '@/types';
 
 export const ProfilePage: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { userData, updateUserProfile, logout } = useAuth();
+  const { userData, updateUserProfile, updateUserPhoto, logout, currentUser } = useAuth();
   const { projects, createProject, updateProject, toggleProjectStatus } = useProjects();
   const { activeDepartments } = useDepartments();
 
@@ -159,12 +160,33 @@ export const ProfilePage: React.FC = () => {
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-6">{t('profile.settings')}</h2>
 
-            <form onSubmit={handleSaveSettings} className="space-y-4">
+            <form onSubmit={handleSaveSettings} className="space-y-6">
               {settingsMessage && (
                 <div className={`rounded-md p-4 ${settingsMessage.includes('success') || settingsMessage.includes(t('profile.profileUpdated')) ? 'bg-green-50' : 'bg-red-50'}`}>
                   <p className={`text-sm ${settingsMessage.includes('success') || settingsMessage.includes(t('profile.profileUpdated')) ? 'text-green-800' : 'text-red-800'}`}>
                     {settingsMessage}
                   </p>
+                </div>
+              )}
+
+              {/* Avatar Upload Section */}
+              {currentUser && (
+                <div className="pb-6 border-b border-gray-200">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    {t('profile.uploadAvatar')}
+                  </label>
+                  <AvatarUploader
+                    userId={currentUser.uid}
+                    currentPhotoURL={userData?.photoURL}
+                    onUploadSuccess={(photoURL) => {
+                      updateUserPhoto(photoURL);
+                      setSettingsMessage(t('profile.profileUpdated'));
+                    }}
+                    onUploadError={(error) => {
+                      console.error('Avatar upload error:', error);
+                      setSettingsMessage(t('profile.avatarUploadError'));
+                    }}
+                  />
                 </div>
               )}
 

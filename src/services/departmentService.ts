@@ -20,6 +20,8 @@ const DEPARTMENTS_COLLECTION = 'departments';
 const departmentConverter = {
   toFirestore: (department: DepartmentEntity) => ({
     name: department.name,
+    colorHex: department.colorHex,
+    colorHexLight: department.colorHexLight,
     isActive: department.isActive,
     createdAt: department.createdAt,
     updatedAt: department.updatedAt,
@@ -29,6 +31,8 @@ const departmentConverter = {
     return {
       id: snapshot.id,
       name: data.name,
+      colorHex: data.colorHex || '#6b7280', // Default gray
+      colorHexLight: data.colorHexLight || '#f3f4f6', // Default light gray
       isActive: data.isActive,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
@@ -69,13 +73,15 @@ export const departmentService = {
   /**
    * Create a new department
    */
-  async createDepartment(name: string): Promise<DepartmentEntity> {
+  async createDepartment(name: string, colorHex?: string, colorHexLight?: string): Promise<DepartmentEntity> {
     const departmentId = doc(collection(db, DEPARTMENTS_COLLECTION)).id;
     const timestamp = now();
 
     const newDepartment: DepartmentEntity = {
       id: departmentId,
       name: name.trim(),
+      colorHex: colorHex || '#6b7280', // Default gray
+      colorHexLight: colorHexLight || '#f3f4f6', // Default light gray
       isActive: true,
       createdAt: timestamp,
       updatedAt: timestamp,
@@ -90,7 +96,7 @@ export const departmentService = {
   /**
    * Update a department
    */
-  async updateDepartment(departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive'>>): Promise<void> {
+  async updateDepartment(departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive' | 'colorHex' | 'colorHexLight'>>): Promise<void> {
     const departmentRef = doc(db, DEPARTMENTS_COLLECTION, departmentId);
     await updateDoc(departmentRef, {
       ...updates,

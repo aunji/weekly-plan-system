@@ -19,6 +19,8 @@ export interface User {
   department: Department;
   language: Language;
   projects: string[]; // Array of project IDs
+  photoURL?: string; // Firebase Storage URL for profile picture
+  photoUpdatedAt?: Timestamp; // Track when photo was last updated
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
@@ -43,6 +45,8 @@ export interface Project {
 export interface DepartmentEntity {
   id: string;
   name: string;
+  colorHex: string; // Primary department color (e.g., "#06b6d4")
+  colorHexLight: string; // Light variant for backgrounds (e.g., "#cffafe")
   isActive: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;

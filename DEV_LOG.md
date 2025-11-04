@@ -1518,3 +1518,140 @@ All necessary configuration files are included and documented.
 **Project Status:** COMPLETE AND PRODUCTION READY ✅
 **Final Build Date:** 2025-11-02 (Bangkok Time)
 **Version:** 1.0.0
+
+## 2025-11-04 08:46 (Bangkok Time)
+
+### Department Theme & Profile Upgrade - COMPLETED ✅
+
+#### Implementation Summary
+Implemented comprehensive department color theming and profile picture upload functionality across the Weekly Plan System.
+
+#### Features Added
+
+**1. Firestore Schema Extensions**
+- ✅ Extended `DepartmentEntity` with color fields:
+  - `colorHex`: Primary department color (e.g., "#06b6d4")
+  - `colorHexLight`: Light variant for backgrounds (e.g., "#cffafe")
+- ✅ Extended `User` interface with profile photo fields:
+  - `photoURL`: Firebase Storage URL for profile picture
+  - `photoUpdatedAt`: Timestamp tracking last photo update
+- ✅ Updated `departmentService` to handle color CRUD operations
+- ✅ Added `updateUserPhoto` method to AuthContext
+
+**2. Firebase Storage Setup**
+- ✅ Integrated Firebase Storage in firebase config
+- ✅ Created `storage.rules` with security constraints:
+  - Image files only (jpeg, jpg, png, gif, webp)
+  - Maximum file size: 5MB
+  - Users can only upload their own profile pictures
+  - Path structure: `users/{userId}/profile.{ext}`
+- ✅ Updated `firebase.json` to include storage rules
+
+**3. CSS Theming System**
+- ✅ Added CSS variables `--dept-color` and `--dept-color-light` in `:root`
+- ✅ Created utility classes:
+  - `.dept-theme`: Text color using department theme
+  - `.dept-theme-bg`: Background with themed border
+  - `.dept-badge`: Department badge styling
+- ✅ Created `src/utils/theme.ts` with theme utilities:
+  - `applyDepartmentTheme()`: Dynamically set CSS variables
+  - `resetDepartmentTheme()`: Reset to default colors
+  - `getDefaultDepartmentColors()`: Default color mapping
+
+**4. React Components**
+- ✅ Created `DeptBadge` component for themed department display
+- ✅ Created `AvatarUploader` component:
+  - Live preview functionality
+  - File validation (type and size)
+  - Upload to Firebase Storage with progress indication
+  - Remove photo capability
+  - Error handling
+- ✅ Created `ThemeProvider` component:
+  - Applies department theme based on user's department
+  - Integrated into App.tsx
+
+**5. UI Integration**
+- ✅ Updated `ProfilePage`:
+  - Integrated AvatarUploader at top of settings
+  - Photo upload with success/error feedback
+- ✅ Updated `PlanCard` (Dashboard):
+  - Replaced plain text department with DeptBadge
+  - Department colors displayed dynamically
+- ✅ Department theming applies globally via ThemeProvider
+
+**6. Localization**
+- ✅ Added English translations:
+  - Avatar upload/remove messages
+  - File validation errors
+  - Department color labels
+- ✅ Added Thai translations:
+  - Complete translation set for all new features
+  - Maintained consistency with existing translations
+
+**7. Data Migration**
+- ✅ Created `src/utils/seedDepartments.ts`:
+  - Utility function for seeding department colors
+  - Smart update: creates new departments or updates existing ones
+- ✅ Created `scripts/seed-departments.ts`:
+  - Standalone script for production seeding
+  - Can be run independently of the app
+- ✅ Created `MIGRATION_GUIDE.md`:
+  - Complete migration instructions
+  - Schema change documentation
+  - Rollback plan
+  - Troubleshooting guide
+
+**8. Default Department Colors**
+- Design: Cyan (#06b6d4)
+- Animation: Purple (#a855f7)
+- Programmer: Green (#10b981)
+- QA: Red (#ef4444)
+- IT: Blue (#3b82f6)
+- Game: Amber (#f59e0b)
+- Marketing: Pink (#ec4899)
+- Management: Violet (#8b5cf6)
+- Other: Gray (#6b7280)
+
+#### Files Modified
+- `src/types/index.ts` - Extended DepartmentEntity and User interfaces
+- `src/services/departmentService.ts` - Added color field support
+- `src/config/firebase.ts` - Added Firebase Storage initialization
+- `firebase.json` - Added storage rules configuration
+- `src/contexts/AuthContext.tsx` - Added updateUserPhoto method
+- `src/index.css` - Added CSS variables and theme classes
+- `src/App.tsx` - Integrated ThemeProvider
+- `src/pages/ProfilePage.tsx` - Integrated AvatarUploader
+- `src/components/dashboard/PlanCard.tsx` - Integrated DeptBadge
+- `src/locales/en.json` - Added English translations
+- `src/locales/th.json` - Added Thai translations
+
+#### Files Created
+- `storage.rules` - Firebase Storage security rules
+- `src/utils/theme.ts` - Theme utility functions
+- `src/components/common/DeptBadge.tsx` - Department badge component
+- `src/components/common/AvatarUploader.tsx` - Avatar upload component
+- `src/components/common/ThemeProvider.tsx` - Theme provider component
+- `src/utils/seedDepartments.ts` - Department seeding utility
+- `scripts/seed-departments.ts` - Standalone seeding script
+- `MIGRATION_GUIDE.md` - Migration documentation
+
+#### Testing
+- ✅ TypeScript compilation successful
+- ✅ Vite build completed successfully (5.18s)
+- ✅ No type errors
+- ✅ All imports resolved correctly
+- ✅ CSS classes properly defined
+
+#### Next Steps
+1. Deploy storage rules: `firebase deploy --only storage`
+2. Run department seeding script to populate colors
+3. Test profile picture upload in production
+4. Monitor storage usage and costs
+5. Consider adding image optimization/compression
+
+#### Technical Notes
+- Profile pictures stored at `users/{userId}/profile.{ext}`
+- Storage rules enforce 5MB limit and image-only uploads
+- Department theme applies globally via CSS variables
+- Theme updates dynamically when user changes department
+- Backward compatible: new fields are optional

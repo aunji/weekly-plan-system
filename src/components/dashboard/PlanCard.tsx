@@ -4,6 +4,8 @@ import type { WeeklyPlan, Blocker } from '@/types';
 import { timestampToDate } from '@/utils/firestore';
 import { formatBangkokDate } from '@/utils/date';
 import { PlanDetailModal } from './PlanDetailModal';
+import { DeptBadge } from '@/components/common/DeptBadge';
+import { useDepartments } from '@/hooks/useDepartments';
 
 interface PlanCardProps {
   plan: WeeklyPlan;
@@ -12,6 +14,10 @@ interface PlanCardProps {
 export const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { activeDepartments } = useDepartments();
+
+  // Find department colors
+  const department = activeDepartments.find(d => d.name === plan.userDepartment);
 
   // Count active blockers
   const activeBlockers = plan.dailyPlans.reduce((count, day) => {
@@ -66,9 +72,15 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
       >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
-        <div>
+        <div className="flex-1">
           <h3 className="font-semibold text-gray-900">{plan.userName}</h3>
-          <p className="text-xs text-gray-500">{plan.userDepartment}</p>
+          <div className="mt-1">
+            <DeptBadge
+              departmentName={plan.userDepartment}
+              colorHex={department?.colorHex}
+              colorHexLight={department?.colorHexLight}
+            />
+          </div>
         </div>
 
         {/* Indicators */}

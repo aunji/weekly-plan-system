@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import { ThemeProvider } from '@/components/common/ThemeProvider';
 
 // Lazy load all pages for better code splitting
 const LoginPage = lazy(() => import('@/pages/LoginPage').then(m => ({ default: m.LoginPage })));
@@ -49,8 +50,9 @@ function App() {
     <ErrorBoundary>
       <Router basename={basename}>
         <AuthProvider>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
+          <ThemeProvider>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/setup-profile"
@@ -92,9 +94,10 @@ function App() {
               </ProtectedRoute>
             }
           />
-            <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
+              <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </ThemeProvider>
         </AuthProvider>
       </Router>
     </ErrorBoundary>

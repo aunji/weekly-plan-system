@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Department theme colors - dynamically set via JS */
+    --dept-color: #6b7280; /* Default gray */
+    --dept-color-light: #f3f4f6; /* Default light gray */
+  }
+
   body {
     @apply bg-gray-50 text-gray-900;
   }
@@ -23,5 +29,21 @@
 
   .card {
     @apply bg-white rounded-lg shadow-md p-6;
+  }
+
+  /* Department theme classes */
+  .dept-theme {
+    color: var(--dept-color);
+  }
+
+  .dept-theme-bg {
+    background-color: var(--dept-color-light);
+    border-left: 4px solid var(--dept-color);
+  }
+
+  .dept-badge {
+    background-color: var(--dept-color-light);
+    color: var(--dept-color);
+    @apply px-3 py-1 rounded-full text-xs font-semibold inline-flex items-center;
   }
 }

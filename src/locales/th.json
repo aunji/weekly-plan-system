@@ -59,7 +59,17 @@
     "activate": "เปิดใช้งาน",
     "deactivate": "ปิดใช้งาน",
     "projectCreated": "สร้างโปรเจกต์สำเร็จ",
-    "projectUpdated": "อัปเดตโปรเจกต์สำเร็จ"
+    "projectUpdated": "อัปเดตโปรเจกต์สำเร็จ",
+    "uploadAvatar": "อัปโหลดรูปภาพ",
+    "removeAvatar": "ลบรูปภาพ",
+    "avatarRequirements": "JPG, PNG, GIF หรือ WEBP ขนาดสูงสุด 5MB",
+    "avatarInvalidType": "ประเภทไฟล์ไม่ถูกต้อง กรุณาอัปโหลด JPG, PNG, GIF หรือ WEBP",
+    "avatarTooLarge": "ไฟล์ใหญ่เกินไป ขนาดสูงสุด 5MB",
+    "avatarUploadError": "อัปโหลดรูปภาพล้มเหลว กรุณาลองอีกครั้ง",
+    "avatarRemoveError": "ลบรูปภาพล้มเหลว กรุณาลองอีกครั้ง",
+    "confirmRemoveAvatar": "คุณแน่ใจหรือไม่ว่าต้องการลบรูปโปรไฟล์?",
+    "departmentColor": "สีแผนก",
+    "departmentColorLight": "สีพื้นหลังอ่อน"
   },
   "department": {
     "manageDepartments": "จัดการแผนก",
@@ -72,7 +82,10 @@
     "deactivate": "ปิดใช้งาน",
     "departmentCreated": "สร้างแผนกสำเร็จ",
     "departmentUpdated": "อัปเดตแผนกสำเร็จ",
-    "departmentDeleted": "ลบแผนกสำเร็จ"
+    "departmentDeleted": "ลบแผนกสำเร็จ",
+    "colorPicker": "เลือกสี",
+    "colorHex": "สีหลัก",
+    "colorHexLight": "สีพื้นหลัง"
   },
   "departments": {
     "IT": "ไอที",

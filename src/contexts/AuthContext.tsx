@@ -22,6 +22,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   updateUserProfile: (data: UserFormData) => Promise<void>;
+  updateUserPhoto: (photoURL: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -201,6 +202,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateUserPhoto = async (photoURL: string) => {
+    if (!currentUser) {
+      throw new Error('No authenticated user');
+    }
+
+    const userDocRef = doc(db, 'users', currentUser.uid).withConverter(userConverter);
+    const timestamp = now();
+
+    // Update only photo fields
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      const updatedUser: User = {
+        ...userDoc.data(),
+        photoURL: photoURL || undefined,
+        photoUpdatedAt: photoURL ? timestamp : undefined,
+        updatedAt: timestamp,
+      };
+      await setDoc(userDocRef, updatedUser);
+      setUserData(updatedUser);
+    }
+  };
+
   const value: AuthContextType = {
     currentUser,
     userData,
@@ -210,6 +233,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     logout,
     updateUserProfile,
+    updateUserPhoto,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
