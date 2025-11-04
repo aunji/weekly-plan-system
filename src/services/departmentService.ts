@@ -18,15 +18,21 @@ const DEPARTMENTS_COLLECTION = 'departments';
 
 // Firestore converter for DepartmentEntity
 const departmentConverter = {
-  toFirestore: (department: DepartmentEntity) => ({
-    name: department.name,
-    colorHex: department.colorHex,
-    colorHexLight: department.colorHexLight,
-    iconURL: department.iconURL,
-    isActive: department.isActive,
-    createdAt: department.createdAt,
-    updatedAt: department.updatedAt,
-  }),
+  toFirestore: (department: DepartmentEntity) => {
+    const data: any = {
+      name: department.name,
+      colorHex: department.colorHex,
+      colorHexLight: department.colorHexLight,
+      isActive: department.isActive,
+      createdAt: department.createdAt,
+      updatedAt: department.updatedAt,
+    };
+    // Only include iconURL if it has a value
+    if (department.iconURL) {
+      data.iconURL = department.iconURL;
+    }
+    return data;
+  },
   fromFirestore: (snapshot: any): DepartmentEntity => {
     const data = snapshot.data();
     return {
@@ -100,10 +106,20 @@ export const departmentService = {
    */
   async updateDepartment(departmentId: string, updates: Partial<Pick<DepartmentEntity, 'name' | 'isActive' | 'colorHex' | 'colorHexLight' | 'iconURL'>>): Promise<void> {
     const departmentRef = doc(db, DEPARTMENTS_COLLECTION, departmentId);
-    await updateDoc(departmentRef, {
-      ...updates,
+
+    // Remove undefined values (Firestore doesn't accept undefined)
+    const cleanedUpdates: any = {
       updatedAt: now(),
+    };
+
+    Object.keys(updates).forEach(key => {
+      const value = (updates as any)[key];
+      if (value !== undefined) {
+        cleanedUpdates[key] = value;
+      }
     });
+
+    await updateDoc(departmentRef, cleanedUpdates);
   },
 
   /**
