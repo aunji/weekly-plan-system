@@ -1,8 +1,8 @@
 [
   {
-    "origin": ["*"],
-    "method": ["GET", "HEAD", "PUT", "POST", "DELETE"],
+    "origin": ["https://siamkoala.com", "http://localhost:5173", "http://localhost:4173", "https://weekly-plan-1406f.web.app", "https://weekly-plan-1406f.firebaseapp.com"],
+    "method": ["GET", "HEAD", "PUT", "POST", "DELETE", "OPTIONS"],
     "maxAgeSeconds": 3600,
-    "responseHeader": ["Content-Type", "Authorization"]
+    "responseHeader": ["Content-Type", "Authorization", "Content-Length", "User-Agent", "X-Requested-With", "X-Goog-Upload-Protocol", "X-Goog-Upload-Command", "X-Goog-Upload-Status", "X-Goog-Upload-Offset"]
   }
 ]
