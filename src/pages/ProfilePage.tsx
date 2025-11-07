@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useProjects } from '@/hooks/useProjects';
 import { useDepartments } from '@/hooks/useDepartments';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
-import { AvatarUploader } from '@/components/common/AvatarUploader';
+import { AvatarURLInput } from '@/components/common/AvatarURLInput';
 import type { Department, Language } from '@/types';
 
 export const ProfilePage: React.FC = () => {
@@ -169,22 +169,17 @@ export const ProfilePage: React.FC = () => {
                 </div>
               )}
 
-              {/* Avatar Upload Section */}
+              {/* Avatar URL Input Section */}
               {currentUser && (
                 <div className="pb-6 border-b border-gray-200">
                   <label className="block text-sm font-medium text-gray-700 mb-3">
-                    {t('profile.uploadAvatar')}
+                    {t('profile.profilePhoto')}
                   </label>
-                  <AvatarUploader
-                    userId={currentUser.uid}
+                  <AvatarURLInput
                     currentPhotoURL={userData?.photoURL}
-                    onUploadSuccess={(photoURL) => {
+                    onPhotoURLChange={(photoURL) => {
                       updateUserPhoto(photoURL);
                       setSettingsMessage(t('profile.profileUpdated'));
-                    }}
-                    onUploadError={(error) => {
-                      console.error('Avatar upload error:', error);
-                      setSettingsMessage(t('profile.avatarUploadError'));
                     }}
                   />
                 </div>

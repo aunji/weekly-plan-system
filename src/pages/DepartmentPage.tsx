@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/config/firebase';
+// Firebase Storage imports removed - now using URL inputs (free!)
 import { useAuth } from '@/contexts/AuthContext';
 import { useDepartments } from '@/hooks/useDepartments';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
@@ -20,7 +19,6 @@ export const DepartmentPage: React.FC = () => {
 
   const [editingDepartment, setEditingDepartment] = useState<string | null>(null);
   const [editData, setEditData] = useState<Partial<DepartmentEntity>>({});
-  const [uploadingIcon, setUploadingIcon] = useState<string | null>(null);
 
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -77,37 +75,30 @@ export const DepartmentPage: React.FC = () => {
     }
   };
 
-  const handleIconUpload = async (departmentId: string, file: File) => {
-    if (file.type !== 'image/svg+xml') {
-      setErrorMessage('Only SVG files are allowed');
-      return;
-    }
-
-    if (file.size > 1024 * 1024) {
-      setErrorMessage('File size must be less than 1MB');
-      return;
-    }
-
-    setUploadingIcon(departmentId);
+  const handleIconURLUpdate = async (departmentId: string, iconURL: string) => {
     try {
-      const storageRef = ref(storage, `departments/${departmentId}/icon.svg`);
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-
-      // Update department with icon URL
-      await updateDepartment(departmentId, { iconURL: downloadURL });
-
-      if (editingDepartment === departmentId) {
-        setEditData({ ...editData, iconURL: downloadURL });
+      // Validate URL if provided
+      if (iconURL.trim()) {
+        try {
+          new URL(iconURL);
+        } catch {
+          setErrorMessage('Please enter a valid URL');
+          return;
+        }
       }
 
-      setMessage('Icon uploaded successfully');
+      // Update department with icon URL
+      await updateDepartment(departmentId, { iconURL: iconURL.trim() });
+
+      if (editingDepartment === departmentId) {
+        setEditData({ ...editData, iconURL: iconURL.trim() });
+      }
+
+      setMessage('Icon URL updated successfully');
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
-      console.error('Icon upload error:', error);
-      setErrorMessage('Failed to upload icon');
-    } finally {
-      setUploadingIcon(null);
+      console.error('Icon URL update error:', error);
+      setErrorMessage('Failed to update icon URL');
     }
   };
 
@@ -284,27 +275,40 @@ export const DepartmentPage: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Icon Upload */}
+                      {/* Icon URL Input */}
                       <div>
-                        <label className="block text-xs text-gray-600 mb-1">Department Icon (SVG)</label>
+                        <label className="block text-xs text-gray-600 mb-1">Department Icon URL</label>
                         <div className="flex items-center gap-3">
                           {editData.iconURL && (
-                            <img src={editData.iconURL} alt="Icon" className="w-8 h-8" />
+                            <img
+                              src={editData.iconURL}
+                              alt="Icon"
+                              className="w-8 h-8 flex-shrink-0"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
                           )}
-                          <input
-                            type="file"
-                            accept=".svg,image/svg+xml"
-                            onChange={e => {
-                              const file = e.target.files?.[0];
-                              if (file) handleIconUpload(department.id, file);
-                            }}
-                            className="text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
-                            disabled={uploadingIcon === department.id}
-                          />
-                          {uploadingIcon === department.id && (
-                            <span className="text-xs text-gray-500">Uploading...</span>
-                          )}
+                          <div className="flex-1 flex gap-2">
+                            <input
+                              type="url"
+                              value={editData.iconURL || ''}
+                              onChange={e => setEditData({ ...editData, iconURL: e.target.value })}
+                              placeholder="https://example.com/icon.svg or .png"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => handleIconURLUpdate(department.id, editData.iconURL || '')}
+                              className="px-3 py-2 text-sm bg-primary-600 text-white rounded-md hover:bg-primary-700"
+                            >
+                              Update
+                            </button>
+                          </div>
                         </div>
+                        <p className="mt-1 text-xs text-gray-500">
+                          Use free hosting: <a href="https://imgur.com" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">Imgur</a> or <a href="https://imgbb.com" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">ImgBB</a>
+                        </p>
                       </div>
 
                       {/* Preview */}
