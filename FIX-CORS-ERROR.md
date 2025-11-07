@@ -16,7 +16,31 @@ Firebase Storage CORS configuration hasn't been deployed to the storage bucket.
 
 ## ✅ Solution (Choose ONE approach)
 
-### **Approach 1: Using Firebase CLI + Google Cloud SDK** (Recommended for developers)
+### **Approach 1: Using Automated Script** (EASIEST - Recommended)
+
+#### Run the automated deployment script:
+```bash
+cd /home/aunji/weekly-plan-system
+./DEPLOY-CORS-FIX.sh
+```
+
+This script will guide you through:
+1. Initializing Firebase Storage (if needed)
+2. Finding the correct bucket name
+3. Deploying CORS configuration
+4. Deploying storage rules
+5. Verifying the setup
+
+---
+
+### **Approach 2: Manual CLI Deployment** (For advanced users)
+
+#### Step 0: Initialize Firebase Storage (REQUIRED FIRST!)
+```bash
+# Go to Firebase Console and initialize Storage:
+# https://console.firebase.google.com/project/weekly-plan-1406f/storage
+# Click "Get Started" and follow the wizard
+```
 
 #### Step 1: Install Google Cloud SDK (if not installed)
 ```bash
@@ -39,19 +63,31 @@ firebase login
 firebase projects:list
 ```
 
-#### Step 3: Deploy CORS Configuration
+#### Step 3: Find Your Bucket Name
+```bash
+# Check your bucket name (could be .appspot.com or .firebasestorage.app)
+firebase apps:sdkconfig web | grep storageBucket
+
+# List all buckets
+gsutil ls
+```
+
+#### Step 4: Deploy CORS Configuration
 ```bash
 # Navigate to project directory
 cd /home/aunji/weekly-plan-system
 
-# Deploy CORS to your Firebase Storage bucket
+# Try the primary bucket name first
+gsutil cors set cors.json gs://weekly-plan-1406f.appspot.com
+
+# If that fails, try the alternative:
 gsutil cors set cors.json gs://weekly-plan-1406f.firebasestorage.app
 
 # Verify CORS is applied
-gsutil cors get gs://weekly-plan-1406f.firebasestorage.app
+gsutil cors get gs://weekly-plan-1406f.appspot.com
 ```
 
-#### Step 4: Deploy Storage Rules
+#### Step 5: Deploy Storage Rules
 ```bash
 # Deploy storage security rules
 firebase deploy --only storage
@@ -60,7 +96,7 @@ firebase deploy --only storage
 firebase deploy
 ```
 
-#### Step 5: Test the Upload
+#### Step 6: Test the Upload
 - Clear browser cache (Ctrl+Shift+Delete)
 - Refresh your app at https://siamkoala.com
 - Try uploading a department icon or profile photo
